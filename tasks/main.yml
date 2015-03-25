@@ -5,7 +5,7 @@
        state=latest
   with_items:
     - vim
-    - emacs24-nox
+    - emacs
     - git
   sudo: yes
 
