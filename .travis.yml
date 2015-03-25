@@ -43,4 +43,4 @@ script:
     || (echo 'Vim Installed: fail' && exit 1)
 
 
-  - > echo hostname
+  - echo hostname
