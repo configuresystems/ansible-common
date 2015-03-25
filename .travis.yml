@@ -1,0 +1,46 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - SITE=test.yml
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y curl python-pip python-apt gcc
+
+install:
+  # Install Ansible 1.8.4 per these tests.
+  - pip install ansible==1.8.4
+
+script:
+  # Check the role/playbook's syntax.
+
+  - ansible-playbook -i tests/inventory/test tests/$SITE --syntax-check
+
+  # Run the role/playbook with ansible-playbook.
+  - ansible-playbook -i tests/inventory/test tests/$SITE --connection=local
+
+  - >
+    ansible-playbook -i tests/inventory/test tests/$SITE --connection=local
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  - >
+    which emacs
+    && (echo 'Emacs Installed: pass' && exit 0)
+    || (echo 'Emacs Installed: fail' && exit 1)
+
+  - >
+    which git
+    && (echo 'Git Installed: pass' && exit 0)
+    || (echo 'Git Installed: fail' && exit 1)
+
+  - >
+    which vim
+    && (echo 'Vim Installed: pass' && exit 0)
+    || (echo 'Vim Installed: fail' && exit 1)
+
+
+  - > echo hostname

@@ -1,0 +1,19 @@
+---
+
+- name: install common packages
+  apt: name={{ item }}
+       state=latest
+  with_items:
+    - vim
+    - emacs24-nox
+    - git
+  sudo: yes
+
+- name: Set Hostname
+  template: src={{ inventory_hostname }}
+  sudo: yes
+
+- name: Copy Hosts File
+  template: src=hosts.j2
+            dest=/etc/hosts
+  sudo: yes
