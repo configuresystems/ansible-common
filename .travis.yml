@@ -42,6 +42,3 @@ script:
     which vim
     && (echo 'Vim Installed: pass' && exit 0)
     || (echo 'Vim Installed: fail' && exit 1)
-
-
-  - echo hostname
